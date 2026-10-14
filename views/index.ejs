@@ -40,9 +40,10 @@
             </td>
             <td><%= student.course %></td>
             <td><%= student.year_level %></td>
+
             <td><%= student.email %></td>
-            <!-- NEW: delete button cell -->
             <td>
+                <a href="/students/edit/<%= student.id %>">Edit</a>
                 <form action="/students/delete/<%= student.id %>" method="POST"
                       onsubmit="return confirm('Delete this student?');">
                     <button type="submit">Delete</button>
