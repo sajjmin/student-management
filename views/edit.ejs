@@ -7,7 +7,15 @@
 
 <body>
 
-    <h1>Edit Student</h1>
+     <h1>Edit Student</h1>
+
+    <% if (errors && errors.length) { %>
+        <ul style="color: red;">
+            <% errors.forEach(e => { %>
+                <li><%= e %></li>
+            <% }); %>
+        </ul>
+    <% } %>
 
     <form action="/students/edit/<%= student.id %>" method="POST">
 
