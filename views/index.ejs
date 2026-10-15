@@ -1,58 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Student Management</title>
-    </head>
-    <body>
-    <h1>Student Management System</h1>
-    <a href="/students/add">Add Student</a>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('partials/header') %>
 
-    <form action="/students/search" method="GET">
-        <input
+    <main class="container">
 
-            type="text"
-            name="keyword"
-            placeholder="Search student..."
-        >
-        <button type="submit">
-            Search
-        </button>
-    </form>
-    <hr>
-    <h2>Student List</h2>
-    <table border="1" cellpadding="10">
-    <tr>
-        <th>ID</th>
-        <th>Student ID</th>
-        <th>Name</th>
-        <th>Course</th>
-        <th>Year</th>
-        <th>Email</th>
-        <th>Actions</th> 
-    </tr>
-    <% students.forEach(student => { %>
-        <tr>
-            <td><%= student.id %></td>
-            <td><%= student.student_id %></td>
-            <td>
-                <%= student.first_name %>
-                <%= student.last_name %>
-            </td>
-            <td><%= student.course %></td>
-            <td><%= student.year_level %></td>
+        <div class="toolbar">
+            <form action="/students/search" method="GET" class="search-form">
+                <input type="text" name="keyword" placeholder="Search student...">
+                <button type="submit" class="btn">Search</button>
+            </form>
+            <a href="/students/add" class="btn">+ Add Student</a>
+        </div>
 
-            <td><%= student.email %></td>
-            <td>
-                <a href="/students/edit/<%= student.id %>">Edit</a>
-                <form action="/students/delete/<%= student.id %>" method="POST"
-                      onsubmit="return confirm('Delete this student?');">
-                    <button type="submit">Delete</button>
-                </form>
-            </td>
-        </tr>
-    <% }); %>
-    </table>
+        <h2>Student List</h2>
 
-
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Course</th>
+                        <th>Year</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (students.length === 0) { %>
+                        <tr><td colspan="7" class="empty">No matching record.</td></tr>
+                    <% } %>
+                    <% students.forEach(student => { %>
+                        <tr>
+                            <td><%= student.id %></td>
+                            <td><%= student.student_id %></td>
+                            <td><%= student.first_name %> <%= student.last_name %></td>
+                            <td><%= student.course %></td>
+                            <td><%= student.year_level %></td>
+                            <td><%= student.email %></td>
+                            <td class="actions">
+                                <a href="/students/edit/<%= student.id %>" class="btn btn-small">Edit</a>
+                                <form action="/students/delete/<%= student.id %>" method="POST"
+                                      onsubmit="return confirm('Delete this student?');">
+                                    <button type="submit" class="btn btn-small btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </main>
 </body>
 </html>
